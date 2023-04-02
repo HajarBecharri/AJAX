@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.4.js"></script>
+</head>
+<body>
+
+    <script>
+        $(function(){
+
+    $("#show").load('hajar.txt',function(restxt,sttxt,xhr){
+        console.log(restxt);
+        console.log(sttxt);
+        console.log(xhr);
+    });
+
+    $(".buttonp").on("click",function(){
+        $.post("auth.php",{name:"hajar"},function(data,statut,xxr){
+            console.log(data)
+
+        })
+    });
+    $(".buttong").on("click",function(){
+        $.get("auth.php ?name=hajar",function(data,statut,xxr){
+            console.log(data)
+
+        })
+    
+    });
+    $(".buttonaj").on("click",function(){
+
+        //the global ajax ,any ajax request will be send to the url bellow using the post method
+        $.ajaxSetup({
+          url :"hajar.txt"
+        });
+        $.ajax({
+            //beforeSend:function(){
+            //console.log("before sending the request")
+          //  }
+            //timeout:3000  
+            //cache:false
+            //async:false
+            //username:'hajar',  for authentication
+            //password:123456
+            dataType:'html' ,//data expected from the server responce ,default is Intel Guess
+            method:'POST',
+            url:'auth.php'  ,//url to send the request ,default is current URL
+            global:false, //to deny the global ajaxsetup
+            data: { name:"hajar"},
+            success:function(data,statut,xxr){
+                console.log(data);
+                console.log(statut)
+
+            },
+            error:function (xhr,statut,error){
+                console.log(xhr);
+                console.log(statut);
+                console.log(error)
+
+            },
+            //the function running after the success and error method (request is completed error or succes)
+            complete:function(xhr,status){
+
+                console.log(xhr);
+                console.log(status);
+
+            }
+
+        })
+    
+    });
+    })
+
+        
+    </script>
+
+    <div id="show"></div>
+    <button class="buttong">GET</button>
+    <button class="buttonp">POST</button>
+    <button class="buttonaj">AJAX</button>
+
+</body>
+</html>
