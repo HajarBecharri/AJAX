@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+    <script src="jquery-3.6.4.js"></script>
+</head>
+<body>
+ 
+<!--http responce status codes
+ 404: not found the request didn't found in server
+ 500: internal server error so the error not from my site
+ 429:Too many responces
+ 200: ok
+-->
+
+
+
+
+    <script>
+       // make request to get data
+
+       function getrepo(){
+
+        //asign the request object to the variable
+        var myrequest = new XMLHttpRequest();
+
+        // call the function when ready state change (the status of the request change)
+        // 0 request not initialised
+        // 1 server connection is established
+        // 2 request recieved
+        //processing request
+        // request is finished and responce is ready
+
+        myrequest.onreadystatechange=function(){
+            
+            if(this.readyState===4 &&this.status===200){
+                console.log(this.responseText);
+
+                //convert responcsetext to js object
+
+              /*  var myobject = JSON.parse(this.responseText);
+                for(var i=0; i<myobject.length;i++)
+                {
+                    console.log(myobject[i].username);
+                }
+                */
+            }
+        
+        };
+        //myrequest.open('GET',"ajax.json",true);
+        //GET
+        myrequest.open('GET',"auth.php?name=hajar",true);
+        myrequest.send();
+        
+
+        //POST
+       /* myrequest.open("POST","auth.php",true);
+        myrequest.setRequestHeader(
+            "content-type",
+            "application/x-www-form-urlencoded"
+        );
+        myrequest.send("name=hajar");
+*/
+
+    }
+    
+    </script>
+
+
+
+<h1>AJAX Tutorial</h1>
+
+<h2>coffee orders</h2>
+<ul id="orders">
+    <li>name:Hajar , Drink:coffee</li>
+    <li>name:MohamedReda , Drink:coffee</li>
+</ul>
+<h4>Add a coffee Order</h4>
+<p>name:<input type="text"></p>
+<p>drink:<input type="text"></p>
+<button id="add-order">Add!</button>
+<button onclick="getrepo()">get name</button>
+</body>
+</html>
